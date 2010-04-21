@@ -1,5 +1,6 @@
 Changelog file for Redirector component.
 
-Redirector 1.0 ($LastChangedRevision: 768 $, $LastChangedDate: 2010-04-21 11:28:46 -0500 (Wed, 21 Apr 2010) $)
+Redirector 1.0 ($LastChangedRevision$, $LastChangedDate$)
 ====================================
+- Fixed bugs in redirects grid
 - Initial commit

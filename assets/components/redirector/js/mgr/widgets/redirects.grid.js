@@ -1,5 +1,11 @@
 Redi.grid.Redirects = function(config) {
     config = config || {};
+    var cb = new Ext.ux.grid.CheckColumn({
+        header: _('redirector.active')
+        ,dataIndex: 'active'
+        ,width: 40
+        ,sortable: false
+    });
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
         ,url: Redi.config.connector_url
@@ -11,14 +17,10 @@ Redi.grid.Redirects = function(config) {
         ,remoteSort: true
         ,anchor: '97%'
         ,autoExpandColumn: 'name'
+        ,plugins: [cb]
         ,columns: [{
-            header: _('id')
-            ,dataIndex: 'id'
-            ,sortable: true
-            ,width: 60
-        },{
             header: _('redirector.pattern')
-            ,dataIndex: 'name'
+            ,dataIndex: 'pattern'
             ,sortable: true
             ,width: 200
             ,editor: { xtype: 'textfield' }
@@ -28,7 +30,7 @@ Redi.grid.Redirects = function(config) {
             ,sortable: false
             ,width: 200
             ,editor: { xtype: 'textfield' }
-        }]
+        },cb]
         ,tbar: [{
             xtype: 'textfield'
             ,id: 'redirector-search-filter'

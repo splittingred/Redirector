@@ -38,7 +38,7 @@ foreach ($redirects as $redirect) {
     $redirectArray['menu'] = array();
     $redirectArray['menu'][] = array(
         'text' => $modx->lexicon('redirector.redirect_update'),
-        'handler' => 'this.updateDoodle',
+        'handler' => 'this.updateRedirect',
     );
     $redirectArray['menu'][] = '-';
     $redirectArray['menu'][] = array(
