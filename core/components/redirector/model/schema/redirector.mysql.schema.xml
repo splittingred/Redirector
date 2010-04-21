@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="redirector" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM">
+    <object class="modRedirect" table="redirects" extends="xPDOSimpleObject">
+        <field key="pattern" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="unique" />
+        <field key="target" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="index" />
+	<field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" index="index" />
+    </object>
+</model>

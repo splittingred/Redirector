@@ -1,0 +1,5 @@
+Changelog file for Redirector component.
+
+Redirector 1.0 ($LastChangedRevision: 768 $, $LastChangedDate: 2010-04-21 11:28:46 -0500 (Wed, 21 Apr 2010) $)
+====================================
+- Initial commit
