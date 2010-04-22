@@ -49,63 +49,41 @@ $builder = new modPackageBuilder($modx);
 $builder->createPackage(PKG_NAME_LOWER,PKG_VERSION,PKG_RELEASE);
 $builder->registerNamespace(PKG_NAME_LOWER,false,true,'{core_path}components/'.PKG_NAME_LOWER.'/');
 
-/* create category */
-$category= $modx->newObject('modCategory');
-$category->set('id',1);
-$category->set('category',PKG_NAME);
+/* add plugin */
+$modx->log(modX::LOG_LEVEL_INFO,'Packaging in plugin...');
+$plugin= $modx->newObject('modPlugin');
+$plugin->fromArray(array(
+    'id' => 1,
+    'name' => 'Redirector',
+    'description' => 'Handles site redirects.',
+    'plugincode' => getSnippetContent($sources['elements'].'plugins/plugin.redirector.php'),
+),'',true,true);
+    $events = array();
+    $events['OnPageNotFound']= $modx->newObject('modPluginEvent');
+    $events['OnPageNotFound']->fromArray(array(
+        'event' => 'OnPageNotFound',
+        'priority' => 0,
+        'propertyset' => 0,
+    ),'',true,true);
+    $plugin->addMany($events);
+    unset($events);
 
-/* add plugins */
-$modx->log(modX::LOG_LEVEL_INFO,'Packaging in snippets...');
-$plugins = include $sources['data'].'transport.plugins.php';
-if (empty($plugins)) $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in plugins.');
-$category->addMany($plugins);
-
-/* create category vehicle */
-$attr = array(
-    xPDOTransport::UNIQUE_KEY => 'category',
+$attributes= array(
+    xPDOTransport::UNIQUE_KEY => 'name',
     xPDOTransport::PRESERVE_KEYS => false,
     xPDOTransport::UPDATE_OBJECT => true,
     xPDOTransport::RELATED_OBJECTS => true,
     xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-        'Children' => array(
-            xPDOTransport::PRESERVE_KEYS => false,
-            xPDOTransport::UPDATE_OBJECT => true,
-            xPDOTransport::UNIQUE_KEY => 'category',
-            xPDOTransport::RELATED_OBJECTS => true,
-            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-                'Plugins' => array(
-                    xPDOTransport::PRESERVE_KEYS => false,
-                    xPDOTransport::UPDATE_OBJECT => true,
-                    xPDOTransport::UNIQUE_KEY => 'name',
-                    xPDOTransport::RELATED_OBJECTS => true,
-                    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-                        'PluginEvents' => array(
-                            xPDOTransport::PRESERVE_KEYS => true,
-                            xPDOTransport::UPDATE_OBJECT => false,
-                            xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'Plugins' => array(
-            xPDOTransport::PRESERVE_KEYS => false,
-            xPDOTransport::UPDATE_OBJECT => true,
-            xPDOTransport::UNIQUE_KEY => 'name',
-            xPDOTransport::RELATED_OBJECTS => true,
-            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-                'PluginEvents' => array(
-                    xPDOTransport::PRESERVE_KEYS => true,
-                    xPDOTransport::UPDATE_OBJECT => false,
-                    xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
-                ),
-            ),
+        'PluginEvents' => array(
+            xPDOTransport::PRESERVE_KEYS => true,
+            xPDOTransport::UPDATE_OBJECT => false,
+            xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
         ),
     ),
 );
-$vehicle = $builder->createVehicle($category,$attr);
+$vehicle = $builder->createVehicle($plugin,$attributes);
 
-$modx->log(modX::LOG_LEVEL_INFO,'Adding file resolvers to category...');
+$modx->log(modX::LOG_LEVEL_INFO,'Adding file resolvers to plugin...');
 $vehicle->resolve('file',array(
     'source' => $sources['source_assets'],
     'target' => "return MODX_ASSETS_PATH . 'components/';",
