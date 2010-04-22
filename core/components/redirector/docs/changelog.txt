@@ -2,6 +2,7 @@ Changelog file for Redirector component.
 
 Redirector 1.0 ($LastChangedRevision$, $LastChangedDate$)
 ====================================
+- Fixes to build script
 - Implement plugin, load pluginevents into build
 - Fixed bugs in redirects grid
 - Initial commit

@@ -5,12 +5,12 @@
  */
 $plugins = array();
 
-$plugins[1]= $modx->newObject('modSnippet');
+$plugins[1]= $modx->newObject('modPlugin');
 $plugins[1]->fromArray(array(
     'id' => 1,
     'name' => 'Redirector',
     'description' => 'Handles site redirects.',
-    'plugincode' => getSnippetContent($sources['elements'].'snippets/snippet.redirector.php'),
+    'plugincode' => file_get_contents($sources['elements'].'plugins/plugin.redirector.php'),
 ),'',true,true);
     $events = array();
     $events['OnPageNotFound']= $modx->newObject('modPluginEvent');
