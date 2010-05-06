@@ -2,6 +2,7 @@ Changelog file for Redirector component.
 
 Redirector 1.0 ($LastChangedRevision$, $LastChangedDate$)
 ====================================
+- Optimized for Revo RC-2
 - Prepared for release
 - Fixes to build script
 - Implement plugin, load pluginevents into build

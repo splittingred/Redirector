@@ -15,7 +15,7 @@ set_time_limit(0);
 define('PKG_NAME','Redirector');
 define('PKG_NAME_LOWER','redirector');
 define('PKG_VERSION','1.0');
-define('PKG_RELEASE','beta1');
+define('PKG_RELEASE','beta2');
 
 /* define build paths */
 $root = dirname(dirname(__FILE__)).'/';
@@ -93,10 +93,6 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_CORE_PATH . 'components/';",
 ));
 $builder->putVehicle($vehicle);
-
-/* load lexicon strings */
-$modx->log(modX::LOG_LEVEL_INFO,'Packaging in lexicon...');
-$builder->buildLexicon($sources['lexicon']);
 
 /* load menu */
 $modx->log(modX::LOG_LEVEL_INFO,'Packaging in menu...');
