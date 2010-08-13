@@ -14,8 +14,8 @@ set_time_limit(0);
 /* define package names */
 define('PKG_NAME','Redirector');
 define('PKG_NAME_LOWER','redirector');
-define('PKG_VERSION','1.0');
-define('PKG_RELEASE','beta2');
+define('PKG_VERSION','1.0.0');
+define('PKG_RELEASE','pl');
 
 /* define build paths */
 $root = dirname(dirname(__FILE__)).'/';

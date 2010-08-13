@@ -9,7 +9,10 @@ if (!($redirector instanceof Redirector)) return '';
 
 /* handle redirects */
 $search = $_SERVER['REQUEST_URI'];
-$search = str_replace($modx->getOption('base_url'),'',$search);
+$baseUrl = $modx->getOption('base_url',null,MODX_BASE_URL);
+if (!empty($baseUrl) && $baseUrl != '/' && $baseUrl != ' ') {
+    $search = str_replace($baseUrl,'',$search);
+}
 $search = ltrim($search,'/');
 $extPos = strrpos($search, '.');
 if ($extPos) {
