@@ -1,7 +1,9 @@
 Changelog file for Redirector component.
 
-Redirector 1.0 ($LastChangedRevision$, $LastChangedDate$)
+Redirector 1.0.0
 ====================================
+- Fixed issue with redirects when base_url is /
+- Added Russian translation
 - Optimized for Revo RC-2
 - Prepared for release
 - Fixes to build script
