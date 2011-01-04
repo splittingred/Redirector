@@ -1,5 +1,9 @@
 Changelog file for Redirector component.
 
+Redirector 1.0.1
+====================================
+- Added Dutch translation
+
 Redirector 1.0.0
 ====================================
 - Fixed issue with redirects when base_url is /
