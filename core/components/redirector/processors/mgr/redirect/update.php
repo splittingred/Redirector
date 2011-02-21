@@ -10,8 +10,8 @@ $redirect = $modx->getObject('modRedirect',$scriptProperties['id']);
 if (empty($redirect)) return $modx->error->failure($modx->lexicon('redirector.redirect_err_nf'));
 
 /* put checkbox to 0 if not present in the array */
-if(!in_array('active', $scriptProperties))
-    $scriptProperties['active'] = 0;
+if(!array_key_exists('active', $scriptProperties))
+    $scriptProperties['active'] = '0';
 
 /* set fields */
 $redirect->fromArray($scriptProperties);
