@@ -4,7 +4,29 @@ Redi.grid.Redirects = function(config) {
         header: _('redirector.active')
         ,dataIndex: 'active'
         ,width: 40
-        ,sortable: false
+        ,sortable: true
+        ,onMouseDown: function(e, t){
+            
+            var rowData = "";
+            //checks/unchecks
+            if(t.className && t.className.indexOf('x-grid3-cc-'+this.id) != -1){
+                e.stopEvent();
+                var index = this.grid.getView().findRowIndex(t);
+                var record = this.grid.store.getAt(index);
+                record.set(this.dataIndex, !record.data[this.dataIndex]);
+                rowData = record.data;//save row records. will be used in the ajax request
+            }
+            
+            //don't send the ajax request if the rowData is empty. rowData is empty if the row is clicked.
+            if(rowData){
+                //send ajax request to update the data
+                Ext.Ajax.request({
+                	url : Redi.config.connector_url, 
+                	params : { action : 'mgr/redirect/updateFromGrid', data: Ext.util.JSON.encode(rowData)},
+                	method: 'POST'
+                });
+            }
+        }
     });
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
