@@ -2,7 +2,8 @@ Changelog file for Redirector component.
 
 Redirector 1.0.1
 ====================================
-- Added Dutch translation
+- Add improvement to auto-save active checkbox on grid
+- Add Dutch translation
 
 Redirector 1.0.0
 ====================================

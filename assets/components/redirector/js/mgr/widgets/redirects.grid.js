@@ -5,28 +5,7 @@ Redi.grid.Redirects = function(config) {
         ,dataIndex: 'active'
         ,width: 40
         ,sortable: true
-        ,onMouseDown: function(e, t){
-            
-            var rowData = "";
-            //checks/unchecks
-            if(t.className && t.className.indexOf('x-grid3-cc-'+this.id) != -1){
-                e.stopEvent();
-                var index = this.grid.getView().findRowIndex(t);
-                var record = this.grid.store.getAt(index);
-                record.set(this.dataIndex, !record.data[this.dataIndex]);
-                rowData = record.data;//save row records. will be used in the ajax request
-            }
-            
-            //don't send the ajax request if the rowData is empty. rowData is empty if the row is clicked.
-            if(rowData){
-                //send ajax request to update the data
-                Ext.Ajax.request({
-                	url : Redi.config.connector_url, 
-                	params : { action : 'mgr/redirect/updateFromGrid', data: Ext.util.JSON.encode(rowData)},
-                	method: 'POST'
-                });
-            }
-        }
+        ,onMouseDown: this.saveCheckbox
     });
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
@@ -83,6 +62,35 @@ Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
         s.baseParams.query = tf.getValue();
         this.getBottomToolbar().changePage(1);
         this.refresh();
+    }
+    ,saveCheckbox: function(e, t){
+        var rowData = false;
+        /* checks/unchecks */
+        if(t.className && t.className.indexOf('x-grid3-cc-'+this.id) != -1){
+            e.stopEvent();
+            var index = this.grid.getView().findRowIndex(t);
+            var record = this.grid.store.getAt(index);
+            record.set(this.dataIndex, !record.data[this.dataIndex]);
+            rowData = record.data; /*save row records. will be used in the ajax request */
+        }
+
+        /*don't send the ajax request if the rowData is empty. rowData is empty if the row is clicked. */
+        if (!rowData) return;
+
+        /* send ajax request to update the data */
+        MODx.Ajax.request({
+            url: Redi.config.connector_url
+            ,params: {
+                action : 'mgr/redirect/updateFromGrid'
+                ,data: Ext.util.JSON.encode(rowData)
+            }
+            ,method: 'POST'
+            ,listeners: {
+                'success': {fn: function(r) {
+                    Ext.getCmp('redirector-grid-redirects').getStore().commitChanges();
+                },scope: this}
+            }
+        });
     }
     ,updateRedirect: function(btn,e) {
         if (!this.updateRedirectWindow) {
