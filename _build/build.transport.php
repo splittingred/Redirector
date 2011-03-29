@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package names */
 define('PKG_NAME','Redirector');
 define('PKG_NAME_LOWER','redirector');
-define('PKG_VERSION','1.0.2');
+define('PKG_VERSION','1.0.3');
 define('PKG_RELEASE','pl');
 
 /* define build paths */
@@ -123,6 +123,7 @@ $modx->log(modX::LOG_LEVEL_INFO,'Adding package attributes and setup options...'
 $builder->setPackageAttributes(array(
     'license' => file_get_contents($sources['docs'] . 'license.txt'),
     'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
+    'changelog' => file_get_contents($sources['docs'] . 'changelog.txt'),
     /*
     'setup-options' => array(
         'source' => $sources['build'].'setup.options.php',

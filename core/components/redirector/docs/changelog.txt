@@ -1,5 +1,10 @@
 Changelog file for Redirector component.
 
+Redirector 1.0.3
+====================================
+- Add sqlsrv support
+- Add changelog to package
+
 Redirector 1.0.1
 ====================================
 - Add improvement to auto-save active checkbox on grid

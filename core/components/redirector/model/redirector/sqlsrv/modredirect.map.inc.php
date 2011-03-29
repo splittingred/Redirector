@@ -15,7 +15,7 @@ $xpdo_meta_map['modRedirect']= array (
   array (
     'pattern' => 
     array (
-      'dbtype' => 'varchar',
+      'dbtype' => 'nvarchar',
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
@@ -24,7 +24,7 @@ $xpdo_meta_map['modRedirect']= array (
     ),
     'target' => 
     array (
-      'dbtype' => 'varchar',
+      'dbtype' => 'nvarchar',
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
@@ -33,9 +33,7 @@ $xpdo_meta_map['modRedirect']= array (
     ),
     'active' => 
     array (
-      'dbtype' => 'tinyint',
-      'precision' => '1',
-      'attributes' => 'unsigned',
+      'dbtype' => 'bit',
       'phptype' => 'boolean',
       'null' => false,
       'default' => 1,

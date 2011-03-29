@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="redirector" baseClass="xPDOObject" platform="sqlsrv">
+    <object class="modRedirect" table="redirects" extends="xPDOSimpleObject">
+        <field key="pattern" dbtype="nvarchar" precision="255" phptype="string" null="false" default="" index="unique" />
+        <field key="target" dbtype="nvarchar" precision="255" phptype="string" null="false" default="" index="index" />
+	    <field key="active" dbtype="bit" phptype="boolean" null="false" default="1" index="index" />
+    </object>
+</model>
