@@ -3,13 +3,13 @@ Redi.panel.Home = function(config) {
     Ext.apply(config,{
         border: false
         ,baseCls: 'modx-formpanel'
+        ,cls: 'container'
         ,items: [{
             html: '<h2>'+_('redirector.management')+'</h2>'
             ,border: false
             ,cls: 'modx-page-header'
         },{
             xtype: 'modx-tabs'
-            ,bodyStyle: 'padding: 10px'
             ,defaults: { border: false ,autoHeight: true }
             ,border: true
             ,stateful: true
@@ -22,11 +22,13 @@ Redi.panel.Home = function(config) {
                 title: _('redirector.redirects')
                 ,defaults: { autoHeight: true }
                 ,items: [{
-                    html: '<p>'+_('redirector.desc')+'</p><br />'
+                    html: _('redirector.desc')
                     ,border: false
+                    ,bodyCssClass: 'panel-desc'
                 },{
                     xtype: 'redirector-grid-redirects'
                     ,preventRender: true
+                    ,cls: 'main-wrapper'
                 }]
             }]
         }]
