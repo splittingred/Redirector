@@ -42,7 +42,7 @@ Redi.grid.Redirects = function(config) {
                     new Ext.KeyMap(cmp.getEl(), {
                         key: Ext.EventObject.ENTER
                         ,fn: function() {
-                            this.fireEvent('change',this.getValue());
+                            this.fireEvent('change', this, this.getValue(), this.startValue);
                             this.blur();
                             return true; }
                         ,scope: cmp
@@ -59,7 +59,7 @@ Redi.grid.Redirects = function(config) {
 Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
     search: function(tf,nv,ov) {
         var s = this.getStore();
-        s.baseParams.query = tf.getValue();
+        s.baseParams.query = nv;
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
