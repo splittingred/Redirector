@@ -4,10 +4,10 @@ $properties['cache_path'] = MODX_CORE_PATH . '/' . (MODX_CONFIG_KEY === 'config'
 
 /* driver-specific connection properties */
 /* mysql */
-$properties['mysql_string_dsn_test']= 'mysql:host=localhost;dbname=modx_modx;charset=utf8';
+$properties['mysql_string_dsn_test']= 'mysql:host=localhost;dbname=modx;charset=utf8';
 $properties['mysql_string_dsn_nodb']= 'mysql:host=localhost;charset=utf8';
-$properties['mysql_string_dsn_error']= 'mysql:host= nonesuchhost;dbname=nonesuchdb';
-$properties['mysql_string_username']= '';
+$properties['mysql_string_dsn_error']= 'mysql:host=nonesuchhost;dbname=nonesuchdb';
+$properties['mysql_string_username']= 'root';
 $properties['mysql_string_password']= '';
 $properties['mysql_array_options']= array(
     xPDO::OPT_CACHE_PATH => $properties['cache_path'],
@@ -18,7 +18,7 @@ $properties['mysql_array_options']= array(
 $properties['mysql_array_driverOptions']= array();
 
 /* sqlsrv */
-$properties['sqlsrv_string_dsn_test']= 'sqlsrv:server=(local);database=modx_modx';
+$properties['sqlsrv_string_dsn_test']= 'sqlsrv:server=(local);database=modx';
 $properties['sqlsrv_string_dsn_nodb']= 'sqlsrv:server=(local)';
 $properties['sqlsrv_string_dsn_error']= 'sqlsrv:server=xyz;123';
 $properties['sqlsrv_string_username']= '';

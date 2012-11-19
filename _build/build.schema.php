@@ -90,7 +90,6 @@ EOD;
     $generator->parseSchema($sources['model'] . 'schema/'.PKG_NAME_LOWER.'.'.$driver.'.schema.xml', $sources['model']);
 }
 
-
 $mtime= microtime();
 $mtime= explode(" ", $mtime);
 $mtime= $mtime[1] + $mtime[0];

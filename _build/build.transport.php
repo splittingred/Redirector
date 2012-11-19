@@ -39,7 +39,7 @@ require_once $sources['build'] . 'includes/functions.php';
 require_once MODX_CORE_PATH . 'model/modx/modx.class.php';
 
 $modx= new modX();
-$modx->initialize('mgr');
+$modx->initialize('mgr'); 
 echo '<pre>'; /* used for nice formatting of log messages */
 $modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget('ECHO');
@@ -50,23 +50,39 @@ $builder->createPackage(PKG_NAME_LOWER,PKG_VERSION,PKG_RELEASE);
 $builder->registerNamespace(PKG_NAME_LOWER,false,true,'{core_path}components/'.PKG_NAME_LOWER.'/');
 
 /* add plugin */
-$modx->log(modX::LOG_LEVEL_INFO,'Packaging in plugin...');
-$plugin= $modx->newObject('modPlugin');
+$modx->log(modX::LOG_LEVEL_INFO,'Packaging in Redirector plugin...');
+
+$plugin = $modx->newObject('modPlugin');
+
 $plugin->fromArray(array(
     'id' => 1,
     'name' => 'Redirector',
     'description' => 'Handles site redirects.',
     'plugincode' => getSnippetContent($sources['elements'].'plugins/plugin.redirector.php'),
 ),'',true,true);
-    $events = array();
-    $events['OnPageNotFound']= $modx->newObject('modPluginEvent');
-    $events['OnPageNotFound']->fromArray(array(
-        'event' => 'OnPageNotFound',
-        'priority' => 0,
-        'propertyset' => 0,
-    ),'',true,true);
-    $plugin->addMany($events);
-    unset($events);
+
+$events = array();
+$events['OnPageNotFound'] = $modx->newObject('modPluginEvent');
+$events['OnPageNotFound']->fromArray(array(
+    'event' => 'OnPageNotFound',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+$events['OnDocFormRender'] = $modx->newObject('modPluginEvent');
+$events['OnDocFormRender']->fromArray(array(
+    'event' => 'OnDocFormRender',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+$events['OnDocFormSave'] = $modx->newObject('modPluginEvent');
+$events['OnDocFormSave']->fromArray(array(
+    'event' => 'OnDocFormSave',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
+$plugin->addMany($events);
+unset($events);
 
 $attributes= array(
     xPDOTransport::UNIQUE_KEY => 'name',
@@ -94,6 +110,21 @@ $vehicle->resolve('file',array(
 ));
 $builder->putVehicle($vehicle);
 
+/* settings */
+$settings = include_once $sources['data'].'transport.settings.php';
+$attributes= array(
+    xPDOTransport::UNIQUE_KEY => 'key',
+    xPDOTransport::PRESERVE_KEYS => true,
+    xPDOTransport::UPDATE_OBJECT => false,
+);
+if (!is_array($settings)) { $modx->log(modX::LOG_LEVEL_FATAL,'Adding settings failed.'); }
+foreach ($settings as $setting) {
+    $vehicle = $builder->createVehicle($setting,$attributes);
+    $builder->putVehicle($vehicle);
+}
+$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' system settings.'); flush();
+unset($settings,$setting,$attributes);
+
 /* load menu */
 $modx->log(modX::LOG_LEVEL_INFO,'Packaging in menu...');
 $menu = include $sources['data'].'transport.menu.php';
@@ -111,10 +142,12 @@ $vehicle= $builder->createVehicle($menu,array (
         ),
     ),
 ));
+
 $modx->log(modX::LOG_LEVEL_INFO,'Adding in PHP resolvers...');
 $vehicle->resolve('php',array(
     'source' => $sources['resolvers'] . 'resolve.tables.php',
 ));
+
 $builder->putVehicle($vehicle);
 unset($vehicle,$menu);
 
