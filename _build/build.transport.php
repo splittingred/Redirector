@@ -20,7 +20,7 @@ define('PKG_RELEASE','beta');
 /* define build paths */
 $root = dirname(dirname(__FILE__)).'/';
 $sources = array(
-    'root' => $root,
+    'root' => $root, 
     'build' => $root . '_build/',
     'data' => $root . '_build/data/',
     'resolvers' => $root . '_build/resolvers/',
