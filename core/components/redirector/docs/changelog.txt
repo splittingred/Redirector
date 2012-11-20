@@ -1,5 +1,9 @@
 Changelog file for Redirector component.
 
+Redirector 1.0.4 (beta)
+====================================
+- Redirect created on alias update. Enable/disable via System Settings
+
 Redirector 1.0.3
 ====================================
 - Add sqlsrv support

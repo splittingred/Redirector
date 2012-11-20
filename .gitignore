@@ -4,3 +4,5 @@ core.config.php
 config.core.php
 .idea
 nbproject
+/_build/build.properties.php
+/_build/build.config.php
