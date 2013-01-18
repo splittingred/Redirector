@@ -71,7 +71,7 @@ class Redirector {
             $pat = $pattern->get('pattern');
             if(preg_match("~$pat~", $search)){
                 $target = $pattern->get('target');
-                $target = preg_replace("~$pat~", $target, $search);
+                $target = preg_replace("~$pat~", $target, preg_replace('/[\[\]]/', '',$search));
                 $this->doRedirect($target, $search, 'Regexp');
                 exit();
             }
