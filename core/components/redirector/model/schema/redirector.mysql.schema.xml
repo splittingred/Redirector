@@ -3,6 +3,16 @@
     <object class="modRedirect" table="redirects" extends="xPDOSimpleObject">
         <field key="pattern" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="unique" />
         <field key="target" dbtype="varchar" precision="255" phptype="string" null="false" default="" index="index" />
-	<field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" index="index" />
+        <field key="sortorder" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="isregexp" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="0" />
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" index="index" />
+    </object>
+
+    <object class="modRedirectPageNotFound" table="pagesnotfound" extends="xPDOSimpleObject">
+        <field key="url" dbtype="text" phptype="string" />
+        <field key="times" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="firsttime" dbtype="int" precision="100" phptype="integer" null="true" default="0" />
+        <field key="lasttime" dbtype="int" precision="100" phptype="integer" null="true" default="0" />
+        <field key="visible" dbtype="tinyint" precision="1" attributes="unsigned" phptype="boolean" null="false" default="1" />
     </object>
 </model>

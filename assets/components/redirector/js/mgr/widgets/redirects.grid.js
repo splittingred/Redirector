@@ -3,35 +3,53 @@ Redi.grid.Redirects = function(config) {
     var cb = new Ext.ux.grid.CheckColumn({
         header: _('redirector.active')
         ,dataIndex: 'active'
-        ,width: 40
+        ,width: 30
         ,sortable: true
         ,onMouseDown: this.saveCheckbox
     });
+    var re = new Ext.ux.grid.CheckColumn({
+        header: _('redirector.isregexp')
+        ,dataIndex: 'isregexp'
+        ,width: 30
+        ,sortable: true
+        ,onMouseDown: this.saveCheckbox
+    });
+
     Ext.applyIf(config,{
         id: 'redirector-grid-redirects'
         ,url: Redi.config.connector_url
-        ,baseParams: { action: 'mgr/redirect/getList' }
+        ,baseParams: { action: 'mgr/redirect/getList', limit: 0, start: 0 }
         ,save_action: 'mgr/redirect/updateFromGrid'
-        ,fields: ['id','pattern','target','active','menu']
-        ,paging: true
+        ,fields: ['id','pattern','target','active','isregexp','sortorder','menu']
+        ,paging: false
+        ,limit: 0
         ,autosave: true
         ,remoteSort: true
         ,anchor: '97%'
-        ,autoExpandColumn: 'name'
-        ,plugins: [cb]
+        ,enableDragDrop: true
+        ,ddGroup: 'redirect-dd'
+        ,ddText: 'Yeah ! You\'re dragging me'
+        ,plugins: [cb,re]
         ,columns: [{
             header: _('redirector.pattern')
             ,dataIndex: 'pattern'
             ,sortable: true
-            ,width: 200
+            ,width: 150
             ,editor: { xtype: 'textfield' }
         },{
             header: _('redirector.target')
             ,dataIndex: 'target'
             ,sortable: false
-            ,width: 200
+            ,width: 150
             ,editor: { xtype: 'textfield' }
-        },cb]
+        },cb,re,
+            {
+                header: _('redirector.priority')
+                ,dataIndex: 'sortorder'
+                ,sortable: true
+                ,width: 30
+                ,editor: { xtype: 'numberfield' }
+            }]
         ,tbar: [{
             xtype: 'textfield'
             ,id: 'redirector-search-filter'
@@ -53,11 +71,66 @@ Redi.grid.Redirects = function(config) {
             text: _('redirector.redirect_create')
             ,handler: { xtype: 'redirector-window-redirect-create' ,blankValues: true }
         }]
+        ,listeners:{
+            "render": {
+                scope: this,
+                fn: function(grid){
+                    var ddrow = new Ext.dd.DropTarget(grid.container, {
+                        ddGroup : 'redirect-dd',
+                        copy:false,
+                        notifyDrop : function(dd, e, data){
+                            var ds = grid.store;
+                            var sm = grid.getSelectionModel();
+                            var rows = sm.getSelections();
+                            if(dd.getDragData(e)) {
+                                var cindex=dd.getDragData(e).rowIndex;
+                                if(typeof(cindex) != "undefined") {
+                                    for(i = 0; i <  rows.length; i++) {
+                                        ds.remove(ds.getById(rows[i].id));
+                                    }
+                                    ds.insert(cindex,data.selections);
+                                    sm.clearSelections();
+                                }
+                            }
+                            grid.collectItems();
+                        }
+                    });
+
+                    this.setWidth('99%');
+                }
+            }
+        }
     });
+
+
     Redi.grid.Redirects.superclass.constructor.call(this,config)
 };
 Ext.extend(Redi.grid.Redirects,MODx.grid.Grid,{
-    search: function(tf,nv,ov) {
+    collectItems: function(){
+        var items=[];
+        // read jsons from grid-store-items
+        var griddata=this.store.data;
+        for(i = 0; i <  griddata.length; i++) {
+            items.push(griddata.items[i].json);
+        }
+
+        items = Ext.util.JSON.encode(items);
+        MODx.Ajax.request({
+            url: Redi.config.connector_url
+            ,params: {
+                action: 'mgr/redirect/sort'
+                ,items: items
+                ,start: this.start
+                ,limit: this.limit
+            }
+            ,listeners: {
+                'success': {fn:function(r) {
+                    this.refresh();
+                },scope:this}
+            }
+        });
+    }
+    ,search: function(tf,nv,ov) {
         var s = this.getStore();
         s.baseParams.query = tf.getValue();
         this.getBottomToolbar().changePage(1);
@@ -148,6 +221,11 @@ Redi.window.CreateRedirect = function(config) {
             ,name: 'active'
             ,inputValue: 1
             ,checked: true
+        },{
+            xtype: 'checkbox'
+            ,fieldLabel: _('redirector.isregexp')
+            ,name: 'isregexp'
+            ,inputValue: 1
         }]
     });
     Redi.window.CreateRedirect.superclass.constructor.call(this,config);
@@ -181,6 +259,11 @@ Redi.window.UpdateRedirect = function(config) {
             xtype: 'checkbox'
             ,fieldLabel: _('redirector.active')
             ,name: 'active'
+            ,inputValue: 1
+        },{
+            xtype: 'checkbox'
+            ,fieldLabel: _('redirector.isregexp')
+            ,name: 'isregexp'
             ,inputValue: 1
         }]
     });

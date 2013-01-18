@@ -25,4 +25,15 @@ $_lang['redirector.menu_desc'] = 'Manage your redirects.';
 $_lang['redirector.pattern'] = 'Pattern';
 $_lang['redirector.search...'] = 'Search...';
 $_lang['redirector.target'] = 'Target';
+$_lang['redirector.priority'] = 'Priority';
+$_lang['redirector.isregexp'] = 'Regexp?';
+$_lang['redirector.errors'] = 'Pages Not Found';
+$_lang['redirector.pnfdesc'] = 'Manage pages not found';
+$_lang['redirector.url'] = 'Url';
+$_lang['redirector.times'] = 'Occurrences';
+$_lang['redirector.firsttime'] = 'First Occurrence';
+$_lang['redirector.lasttime'] = 'Last Occurrence';
+$_lang['redirector.remove_page_not_found'] = 'Remove this entry';
+$_lang['redirector.ignore_page_not_found'] = 'Ignore this entry';
+$_lang['redirector.create_rule'] = 'Create Redirect Rule From This Entry';
 

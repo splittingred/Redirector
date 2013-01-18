@@ -1,5 +1,11 @@
 Changelog file for Redirector component.
 
+Redirector 1.0.4
+====================================
+- Add Regular Expression support
+- Add 404 logging and easy way to create redirection from them
+- Add priority for Redirection Rules
+
 Redirector 1.0.3
 ====================================
 - Add sqlsrv support

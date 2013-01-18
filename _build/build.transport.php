@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package names */
 define('PKG_NAME','Redirector');
 define('PKG_NAME_LOWER','redirector');
-define('PKG_VERSION','1.0.3');
+define('PKG_VERSION','1.0.4');
 define('PKG_RELEASE','pl');
 
 /* define build paths */
@@ -65,6 +65,13 @@ $plugin->fromArray(array(
         'priority' => 0,
         'propertyset' => 0,
     ),'',true,true);
+    $events['OnSiteRefresh'] = $modx->newObject('modPluginEvent');
+    $events['OnSiteRefresh']->fromArray(array(
+        'event' => 'OnSiteRefresh',
+        'priority' => 0,
+        'propertyset' => 0,
+    ),'',true,true);
+
     $plugin->addMany($events);
     unset($events);
 

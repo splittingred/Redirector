@@ -5,6 +5,7 @@
  * @package redirector
  * @subpackage controllers
  */
+$modx->regClientStartupScript($redirector->config['jsUrl'].'mgr/widgets/pagenotfound.grid.js');
 $modx->regClientStartupScript($redirector->config['jsUrl'].'mgr/widgets/redirects.grid.js');
 $modx->regClientStartupScript($redirector->config['jsUrl'].'mgr/widgets/home.panel.js');
 $modx->regClientStartupScript($redirector->config['jsUrl'].'mgr/sections/index.js');

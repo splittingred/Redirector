@@ -26,4 +26,14 @@ $_lang['redirector.menu_desc'] = 'Verwalten Sie Umleitungen für Ihre Webseite.'
 $_lang['redirector.pattern'] = 'Muster';
 $_lang['redirector.search...'] = 'Suche...';
 $_lang['redirector.target'] = 'Ziel';
-
+$_lang['redirector.priority'] = 'Priority';
+$_lang['redirector.isregexp'] = 'Regexp?';
+$_lang['redirector.errors'] = 'Pages Not Found';
+$_lang['redirector.pnfdesc'] = 'Manage pages not found';
+$_lang['redirector.url'] = 'Url';
+$_lang['redirector.times'] = 'Occurrences';
+$_lang['redirector.firsttime'] = 'First Occurrence';
+$_lang['redirector.lasttime'] = 'Last Occurrence';
+$_lang['redirector.remove_page_not_found'] = 'Remove this entry';
+$_lang['redirector.ignore_page_not_found'] = 'Ignore this entry';
+$_lang['redirector.create_rule'] = 'Create Redirect Rule From This Entry';
