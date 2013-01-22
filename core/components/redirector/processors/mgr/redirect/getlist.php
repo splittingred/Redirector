@@ -8,8 +8,8 @@
 /* setup default properties */
 $isLimit = !empty($_REQUEST['limit']);
 $start = $modx->getOption('start',$_REQUEST,0);
-$limit = $modx->getOption('limit',$_REQUEST,20);
-$sort = $modx->getOption('sort',$_REQUEST,'pattern');
+$limit = $modx->getOption('limit',$_REQUEST,0);
+$sort = $modx->getOption('sort',$_REQUEST,'sortorder');
 $dir = $modx->getOption('dir',$_REQUEST,'ASC');
 $query = $modx->getOption('query',$_REQUEST,'');
 
@@ -27,7 +27,7 @@ if (!empty($query)) {
 
 $count = $modx->getCount('modRedirect',$c);
 $c->sortby($sort,$dir);
-if ($isLimit) $c->limit($limit,$start);
+//if ($isLimit) $c->limit($limit,$start); //Ignore the limit
 $redirects= $modx->getCollection('modRedirect', $c);
 
 /* iterate */

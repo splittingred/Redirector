@@ -19,6 +19,16 @@ Redi.panel.Home = function(config) {
                 return {activeTab:this.items.indexOf(this.getActiveTab())};
             }
             ,items: [{
+                title: _('redirector.errors')
+                ,defaults: { autoHeight: true }
+                ,items: [{
+                    html: '<p>'+_('redirector.pnfdesc')+'</p><br />'
+                    ,border: false
+                },{
+                    xtype: 'redirector-grid-pagenotfound'
+                    ,preventRender: true
+                }]
+            },{
                 title: _('redirector.redirects')
                 ,defaults: { autoHeight: true }
                 ,items: [{

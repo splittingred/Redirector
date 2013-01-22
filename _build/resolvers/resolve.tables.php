@@ -15,6 +15,7 @@ if ($object->xpdo) {
             $manager = $modx->getManager();
 
             $manager->createObjectContainer('modRedirect');
+            $manager->createObjectContainer('modRedirectPageNotFound');
 
             break;
         case xPDOTransport::ACTION_UPGRADE:

@@ -4,7 +4,9 @@
  */
 $xpdo_meta_map['modRedirect']= array (
   'package' => 'redirector',
+  'version' => NULL,
   'table' => 'redirects',
+  'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
     'pattern' => '',
