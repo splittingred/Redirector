@@ -131,7 +131,6 @@ class Redirector {
      */
     public function clearRedirectCache(){
         $this->modx->cacheManager->refresh(array($this->cacheName => array()));
-        $this->cache->refresh();
     }
 
     /**
